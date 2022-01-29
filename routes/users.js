@@ -10,6 +10,18 @@ function generateAccessToken(username) {
     return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '120s' });
 }
 
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+  
+    if (token == null) return res.sendStatus(401)
+    //console.log('Mw is called')
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.user = decoded;
+
+    next()
+}
+
 router.route('/')
 .get((req,res) => {
     User.find()
@@ -70,9 +82,16 @@ router.route('/:id') //TODO: Better catch messages
     .catch(err =>  res.status(500).json({message : err.message}))
 }
 )
-.put((req,res) => {//TODO: Add verification middleware
+.put( authenticateToken, (req,res) => {
 
-    User.findByIdAndUpdate(req.params.id, req.body, {new: true} )
+    let updated_props = req.body;
+    if ('password' in req.body){
+        const salt = bcrypt.genSaltSync(10);
+        pwd_encrypt = bcrypt.hashSync(req.body.password, salt);
+        updated_props = {...updated_props, password:pwd_encrypt}
+    }
+    
+    User.findByIdAndUpdate(req.params.id, updated_props, {new: true} )
     .then( user => res.json(user))
     .catch(err =>  res.status(500).json({message : err.message}))
     }
@@ -115,7 +134,7 @@ router.route('/favorite/:id').post((req,res) => {
 
     User.findById(req.params.id)
     .then(user => 
-   {
+    {
 
 	    //Quote.findById(req.body.quote_id).then( quote => 
 	    //{

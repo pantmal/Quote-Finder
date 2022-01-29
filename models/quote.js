@@ -19,8 +19,12 @@ const quoteSchema = new Schema({
         required: true
     },
 
-    author: { type: Schema.Types.ObjectId, ref: 'Author' }
-    //category: { type: Schema.Types.ObjectId, ref: 'Category' }
+    author: { type: Schema.Types.ObjectId, ref: 'Author' },
+    category: {
+        type: String,
+        required: true
+    },
+    objections: [{ type: Schema.Types.ObjectId, ref: 'Objection' }] 
 });
 //TODO: Decide on required
 
@@ -35,20 +39,20 @@ const authorSchema = new Schema({
 
 });
 
-// const categorySchema = new Schema({
+const objectionSchema = new Schema({
+ 
+    comment: {
+     type:String,
+     required: true
+    },
+   
+    quote: { type: Schema.Types.ObjectId, ref: 'Quote' },
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
 
-//     name: {
-//     type:String,
-//     required: true
-//     },
-    
-//     quotes: [{ type: Schema.Types.ObjectId, ref: 'Quote' }]
-
-// });
-
+   });
 
 const Quote = mongoose.model('Quote',quoteSchema);
 const Author = mongoose.model('Author', authorSchema);
-//const Category = mongoose.model('Category', categorySchema);
+const Objection = mongoose.model('Objection', objectionSchema);
 
-module.exports = {Quote, Author};
+module.exports = {Quote, Author, Objection};

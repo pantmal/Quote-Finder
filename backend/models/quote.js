@@ -4,52 +4,71 @@ const Schema = mongoose.Schema
 
 const quoteSchema = new Schema({
  
- content: {
-  type:String,
-  required: true
- },
+    content: {
+        type:String,
+        required: true
+    },
 
- source:{
+    source:{
         type: String,
         required: true
     },
 
- year:{
+    year:{
         type: Number,
         required: true
     },
 
-    author: { type: Schema.Types.ObjectId, ref: 'Author' },
     category: {
         type: String,
         required: true
     },
-    objections: [{ type: Schema.Types.ObjectId, ref: 'Objection' }] 
+
+    author: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'Author', 
+        required: true 
+    },
+
+    objections: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'Objection' 
+    }] 
 });
-//TODO: Decide on required
+
 
 const authorSchema = new Schema({
 
     name: {
-    type:String,
-    required: true
+        type:String,
+        required: true
     },
     
-    quotes: [{ type: Schema.Types.ObjectId, ref: 'Quote' }]
+    quotes: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'Quote' 
+    }]
 
 });
 
 const objectionSchema = new Schema({
  
     comment: {
-     type:String,
-     required: true
+        type:String,
+        required: true
     },
    
-    quote: { type: Schema.Types.ObjectId, ref: 'Quote' },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    quote: { 
+        type: Schema.Types.ObjectId, ref: 'Quote',
+        required: true
+    },
+    
+    user: { 
+        type: Schema.Types.ObjectId, ref: 'User',
+        required: true
+    },
 
-   });
+});
 
 const Quote = mongoose.model('Quote',quoteSchema);
 const Author = mongoose.model('Author', authorSchema);

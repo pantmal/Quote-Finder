@@ -199,7 +199,14 @@ Returns a random quote.
 
 The deployment of the app is done through Docker.
 
-To build the docker image use: `sudo docker-compose build`
+To install Docker on Ubuntu 20.04 you may use the following steps:
+- Update software repositories with: `sudo apt-get update`
+- Uninstall old Docker versions with: `sudo apt-get remove docker docker-engine docker.io` 
+- Install Docker: `sudo apt install docker.io` 
+- Start Docker with: `sudo systemctl start docker` and `sudo systemctl enable docker` 
+- You may optionally verify the installation with: `docker --version`
+
+Now, to build the docker image use: `sudo docker-compose build`
 
 And to run the image: `sudo docker-compose up`
 

@@ -3,7 +3,7 @@
 
 Backend application created using Node, Express and MongoDB.
 
-The backend of this project was developed to be used as a server for an application involving finding, adding, commenting on quotes. Front end is coming later...
+The backend of this project was developed to be used as a server for an application involving finding, adding, commenting on quotes. Visual interface with React will be later added in the project.
 
 # Database Schemas
 
@@ -44,7 +44,7 @@ The backend of this project was developed to be used as a server for an applicat
 
 # Server/API
 
-To evaluate the API, I used the Postman application.
+To evaluate the API, I used the Postman application. The base URL of the server is in localhost:5000.
 
 The following API calls were developed and tested:
 
@@ -193,3 +193,18 @@ Returns the newly created author.
 No arguments
 
 Returns a random quote.
+
+
+# Deployment 
+
+The deployment of the app is done through Docker.
+
+To build the docker image use: `sudo docker-compose build`
+
+And to run the image: `sudo docker-compose up`
+
+Simple as that! If you ever need to stop the image you can use: `sudo docker-compose down`
+
+Finally if you want to avoid using sudo on every docker command, you can run: `sudo chmod 666 /var/run/docker.sock` and just use the other docker commands without sudo.
+
+
